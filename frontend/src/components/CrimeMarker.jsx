@@ -1,41 +1,41 @@
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
-import L from "leaflet";
+import { createCrimeMarker } from "./Map/markers";
 import { formatDate, formatTime } from "../utils/formatters";
-
-// Helper to get custom icon or default
-const getIcon = (type) => {
-  // Assuming images exist in public/map-icons/
-  // Fallback to simple divIcon if image fails logic would go here
-  return L.icon({
-    iconUrl: `/map-icons/${type.toLowerCase()}.png`,
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-    popupAnchor: [0, -30],
-    // Fallback if image missing (uses Leaflet default)
-    className: "custom-marker-icon",
-  });
-};
+import "./Map/mapStyles.css";
 
 export default function CrimeMarker({ crime }) {
-  // Safety check: if image loads fail, this might need a default generic icon
-  const icon = getIcon(crime.type);
+  // Use the new custom marker system
+  const icon = createCrimeMarker(crime.type);
 
   return (
     <Marker position={[crime.lat, crime.lng]} icon={icon}>
       <Popup className="crime-popup">
-        <div style={{ minWidth: "150px" }}>
-          <h4 style={{ margin: "0 0 5px 0", color: "#0f172a" }}>
+        <div style={{ minWidth: "200px" }}>
+          <h4
+            style={{
+              margin: "0 0 8px 0",
+              color: "#fff",
+              textTransform: "capitalize",
+              fontSize: "14px",
+            }}
+          >
             {crime.type}
           </h4>
-          <p style={{ margin: 0, fontSize: "12px", color: "#64748b" }}>
-            {formatDate(crime.date)} at {formatTime(crime.date)}
+          <p style={{ margin: "4px 0", fontSize: "12px", color: "#d1d5db" }}>
+            📍 {crime.location}
           </p>
-          <div
-            style={{ marginTop: "5px", fontSize: "11px", fontWeight: "bold" }}
-          >
-            {crime.location}
-          </div>
+          <p style={{ margin: "4px 0", fontSize: "12px", color: "#d1d5db" }}>
+            📅 {formatDate(crime.date)}
+          </p>
+          <p style={{ margin: "4px 0", fontSize: "12px", color: "#d1d5db" }}>
+            🕐 {formatTime(crime.date)}
+          </p>
+          {crime.zoneId && (
+            <p style={{ margin: "4px 0", fontSize: "11px", color: "#9ca3af" }}>
+              Zone ID: {crime.zoneId}
+            </p>
+          )}
         </div>
       </Popup>
     </Marker>

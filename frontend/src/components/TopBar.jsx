@@ -6,7 +6,7 @@ export default function TopBar() {
     <header className="top-bar">
       <div className="brand">
         <Shield size={24} />
-        <h1>SafeCity</h1>
+        <h1>RakshakAI</h1>
       </div>
       <div className="city-selector">
         <MapPin size={16} /> Mumbai, MH

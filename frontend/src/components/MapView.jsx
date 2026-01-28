@@ -6,6 +6,7 @@ import HeatmapLayer from "./HeatmapLayer";
 import { MAP_CENTER } from "../utils/constants";
 import "leaflet/dist/leaflet.css";
 import "../styles/map.css";
+import "./Map/mapStyles.css"; // Custom marker styles
 
 export default function MapView({ crimes, showHeatmap, showHotspots }) {
   return (
