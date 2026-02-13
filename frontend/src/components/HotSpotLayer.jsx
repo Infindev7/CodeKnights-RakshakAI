@@ -19,10 +19,9 @@ const calculateDistance = (lat1, lng1, lat2, lng2) => {
 };
 
 export default function HotspotLayer({ crimes }) {
-  if (!crimes || crimes.length === 0) return null;
-
   // Generate clusters based on spatial density (DBSCAN-like approach)
   const clusters = useMemo(() => {
+    if (!crimes || crimes.length === 0) return [];
     const clusterMap = [];
     const visited = new Set();
     const RADIUS_KM = 1.5; // 1.5 km clustering radius
@@ -71,6 +70,8 @@ export default function HotspotLayer({ crimes }) {
     console.log(`Generated ${clusterMap.length} hotspot clusters`);
     return clusterMap;
   }, [crimes]);
+
+  if (!clusters || clusters.length === 0) return null;
 
   return (
     <>

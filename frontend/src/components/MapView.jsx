@@ -2,7 +2,7 @@ import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import CrimeMarker from "./CrimeMarker";
 import PoliceStationMarker from "./PoliceStationMarker";
-import HotspotLayer from "./HotspotLayer";
+import HotSpotLayer from "./HotSpotLayer";
 import HeatmapLayer from "./HeatmapLayer";
 import { MAP_CENTER } from "../utils/constants";
 import "leaflet/dist/leaflet.css";
@@ -39,7 +39,7 @@ export default function MapView({
             <PoliceStationMarker key={station.id} station={station} />
           ))}
 
-        {showHotspots && <HotspotLayer crimes={crimes} />}
+        {showHotspots && <HotSpotLayer crimes={crimes} />}
 
         {showHeatmap && <HeatmapLayer crimes={crimes} />}
       </MapContainer>
