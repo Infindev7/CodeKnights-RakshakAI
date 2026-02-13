@@ -3,7 +3,7 @@ import TopBar from "../components/TopBar";
 import Sidebar from "../components/Sidebar";
 import MapView from "../components/MapView";
 import InsightsPanel from "../components/InsightsPanel";
-import useCrimeData from "../hooks/UseCrimedata";
+import useCrimeData from "../hooks/UseCrimeData";
 import usePoliceStations from "../hooks/usePoliceStations";
 import "../styles/layout.css";
 
