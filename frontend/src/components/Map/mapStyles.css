@@ -1,0 +1,207 @@
+/* ========== CUSTOM CRIME MARKERS ========== */
+
+.crime-marker-container {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.crime-marker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 2px solid white;
+  position: relative;
+}
+
+.crime-marker:hover {
+  transform: scale(1.25);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+.crime-marker:active {
+  transform: scale(1.1);
+}
+
+/* Crime-specific colors */
+.crime-marker.theft {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+}
+
+.crime-marker.assault {
+  background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
+}
+
+.crime-marker.accident {
+  background: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
+}
+
+.crime-marker.default {
+  background: linear-gradient(135deg, #a855f7 0%, #6d28d9 100%);
+}
+
+.crime-marker .marker-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.crime-marker svg {
+  filter: drop-shadow(0.5px 0.5px 1px rgba(0, 0, 0, 0.2));
+}
+
+/* ========== MARKER PULSE ANIMATION ========== */
+
+.crime-marker.high-risk {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.25),
+      0 0 0 2px white,
+      0 0 0 4px currentColor;
+  }
+  70% {
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.25),
+      0 0 0 2px white,
+      0 0 0 12px rgba(220, 38, 38, 0);
+  }
+  100% {
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.25),
+      0 0 0 2px white,
+      0 0 0 4px rgba(220, 38, 38, 0);
+  }
+}
+
+/* ========== HOTSPOT MARKERS ========== */
+
+.hotspot-marker-container {
+  background: none !important;
+  border: none !important;
+}
+
+.hotspot-marker {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.5) 0%,
+    rgba(239, 68, 68, 0.1) 100%
+  );
+  border: 2px solid rgba(239, 68, 68, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+}
+
+.hotspot-pulse {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 1) 0%,
+    rgba(239, 68, 68, 0.6) 100%
+  );
+  border-radius: 50%;
+  animation: hotspot-pulse 1.5s ease-out infinite;
+}
+
+@keyframes hotspot-pulse {
+  0% {
+    width: 16px;
+    height: 16px;
+    opacity: 1;
+  }
+  100% {
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+  }
+}
+
+/* ========== LEAFLET POPUP CUSTOMIZATION ========== */
+
+.leaflet-popup-content-wrapper {
+  background-color: #1f2937 !important;
+  border-radius: 8px !important;
+  border: 1px solid #374151 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.leaflet-popup-content {
+  color: #f3f4f6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  margin: 8px 0 !important;
+}
+
+.leaflet-popup-content strong {
+  color: #fff;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.leaflet-popup-tip {
+  background-color: #1f2937 !important;
+  border-top-color: #374151 !important;
+}
+
+/* ========== RESPONSIVE MARKERS ========== */
+
+@media (max-width: 768px) {
+  .crime-marker {
+    width: 28px;
+    height: 28px;
+  }
+
+  .crime-marker:hover {
+    transform: scale(1.2);
+  }
+}
+
+/* ========== ACCESSIBILITY ========== */
+
+.crime-marker:focus {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+@media (prefers-contrast: more) {
+  .crime-marker {
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.5),
+      0 0 0 3px white;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .crime-marker {
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.5),
+      0 0 0 2px #1f2937;
+  }
+
+  .crime-marker:hover {
+    box-shadow:
+      0 3px 10px rgba(0, 0, 0, 0.6),
+      0 0 0 3px #1f2937;
+  }
+}
