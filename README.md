@@ -13,15 +13,35 @@ Legacy detailed docs are archived in `docs/archive/`.
 
 ## Backend Architecture
 
-```text
-Client (React)
-  -> REST API (/api/*)
-FastAPI app (backend/main.py)
-  -> Routers (backend/routes/*)
-  -> Services (backend/services/*)
-  -> Schemas (backend/schemas/*)
-  -> Models (backend/models/*)
-  -> SQLite (backend/rakshak_ai.db)
+```mermaid
+flowchart LR
+    U[User Browser]
+
+    subgraph FE[Frontend - React + Vite]
+        UI[Pages and Components]
+        APIJS[services/api.js]
+    end
+
+    subgraph BE[Backend - FastAPI]
+        MAIN[main.py]
+        ROUTES[routes/*]
+        SERVICES[services/*]
+        SCHEMAS[schemas/*]
+        MODELS[models/*]
+    end
+
+    DB[(SQLite\nrakshak_ai.db)]
+    EXT[Gemini API]
+
+    U --> UI
+    UI --> APIJS
+    APIJS -->|HTTP /api/*| MAIN
+    MAIN --> ROUTES
+    ROUTES --> SERVICES
+    ROUTES --> SCHEMAS
+    SERVICES --> MODELS
+    MODELS --> DB
+    SERVICES --> EXT
 ```
 
 - `main.py`: app setup, CORS, router registration.
@@ -40,20 +60,12 @@ FastAPI app (backend/main.py)
 
 ## Screenshots
 
-Add images in this section after deployment.
+
 
 ### 1. Dashboard Overview
 
-Add screenshot here: map + filters + analysis cards.
+<img src="public/screenshots/Dashboard.png" alt="Dashboard Overview" width="900" />
 
 ### 2. AI Predictions View
+<img src="public/screenshots/Analysis.png" alt="Analysis Page Overview" width="900" />
 
-Add screenshot here: prediction markers + suggestion panel.
-
-### 3. API Health / Swagger
-
-Add screenshot here: `/health` response or `/docs` page.
-
-### 4. Deployment Proof
-
-Add screenshot here: live Vercel URL and working API calls.
