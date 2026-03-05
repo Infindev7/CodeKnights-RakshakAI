@@ -7,7 +7,7 @@ import useCrimeData from "../hooks/UseCrimeData";
 import usePoliceStations from "../hooks/usePoliceStations";
 import "../styles/layout.css";
 
-export default function Dashboard() {
+export default function Dashboard({ onNavigate, activePage }) {
   // 1. Shared State
   const [filters, setFilters] = useState({
     crimeType: "All",
@@ -41,9 +41,13 @@ export default function Dashboard() {
     setToggles({ showHeatmap: false, showHotspots: true, showPoliceStations: true });
   };
 
+  const handleGenerateReport = () => {
+    onNavigate("predictions");
+  };
+
   return (
     <div className="dashboard-layout">
-      <TopBar />
+      <TopBar onNavigate={onNavigate} activePage={activePage} />
 
       <div className="main-content">
         <Sidebar
@@ -90,7 +94,10 @@ export default function Dashboard() {
               showPoliceStations={toggles.showPoliceStations}
             />
 
-            <InsightsPanel data={crimes} />
+            <InsightsPanel
+              data={crimes}
+              onGenerateReport={handleGenerateReport}
+            />
           </>
         )}
       </div>
