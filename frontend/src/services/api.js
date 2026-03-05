@@ -1,8 +1,9 @@
 import axios from "axios";
 
 // Use environment variables for configuration
-const USE_REAL_API = import.meta.env.VITE_USE_REAL_API === 'true';
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
+const USE_REAL_API = import.meta.env.VITE_USE_REAL_API === "true";
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL;
 
 // Create axios instance with default config
 const apiClient = axios.create({
@@ -275,9 +276,7 @@ export const fetchPredictionsByZone = async (zoneId) => {
 
 export const fetchLatestPredictionForZone = async (zoneId) => {
   try {
-    const response = await apiClient.get(
-      `/predictions/zone/${zoneId}/latest`,
-    );
+    const response = await apiClient.get(`/predictions/zone/${zoneId}/latest`);
     return response.data;
   } catch (error) {
     console.error(
@@ -316,9 +315,7 @@ export const fetchPatrolSuggestions = async (filters = {}) => {
 
 export const fetchPatrolSuggestionsByZone = async (zoneId) => {
   try {
-    const response = await apiClient.get(
-      `/patrol-suggestions/zone/${zoneId}`,
-    );
+    const response = await apiClient.get(`/patrol-suggestions/zone/${zoneId}`);
     return response.data;
   } catch (error) {
     console.error(
@@ -407,27 +404,73 @@ export const fetchPoliceStationById = async (stationId) => {
 
 export const fetchPoliceStationsByZone = async (zoneId) => {
   try {
-    const response = await apiClient.get(
-      `/police-stations/zone/${zoneId}`,
-    );
+    const response = await apiClient.get(`/police-stations/zone/${zoneId}`);
     return response.data;
   } catch (error) {
-    console.error(
-      `Error fetching police stations for zone ${zoneId}:`,
-      error,
-    );
+    console.error(`Error fetching police stations for zone ${zoneId}:`, error);
     throw error;
   }
 };
 
-export const fetchNearbyPoliceStations = async (latitude, longitude, radiusKm = 5) => {
+export const fetchNearbyPoliceStations = async (
+  latitude,
+  longitude,
+  radiusKm = 5,
+) => {
   try {
     const response = await apiClient.get("/police-stations/nearby", {
-      params: { latitude, longitude, radius_km: radiusKm }
+      params: { latitude, longitude, radius_km: radiusKm },
     });
     return response.data;
   } catch (error) {
     console.error("Error fetching nearby police stations:", error);
+    throw error;
+  }
+};
+
+// ========== AI HELPER APIs ==========
+
+export const trainAIModels = async () => {
+  try {
+    const response = await apiClient.post("/crimes/ai/train");
+    return response.data;
+  } catch (error) {
+    console.error("Error training AI models:", error);
+    throw error;
+  }
+};
+
+export const getAIPatrolSuggestions = async (
+  latitude,
+  longitude,
+  area,
+  crimeType,
+) => {
+  if (!USE_REAL_API) {
+    return {
+      latitude,
+      longitude,
+      risk_level: "High",
+      expected_crime_time_window: "Next 24 hours",
+      suggestions: [
+        `Increase visible patrols in ${area} during peak movement periods`,
+        "Deploy mixed foot and vehicle patrols near transit and market areas",
+      ],
+    };
+  }
+
+  try {
+    const response = await apiClient.get("/crimes/ai/patrol-suggestions", {
+      params: {
+        latitude,
+        longitude,
+        area,
+        crime_type: crimeType,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching AI patrol suggestions:", error);
     throw error;
   }
 };
